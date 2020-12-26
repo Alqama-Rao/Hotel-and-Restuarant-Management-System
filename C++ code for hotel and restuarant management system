@@ -1,0 +1,1041 @@
+#include<iostream>
+#include<conio.h>
+#include<fstream>
+#include<stdio.h>
+#include<stdlib.h>
+#include<dos.h>
+#include<windows.h>
+
+using namespace std;
+class hotel
+{
+
+	int room_no;
+	char name[30];
+	char address[50];
+	char phone[11];
+
+	public:
+
+void main_menu()
+{
+
+int choice;
+while(choice!=4)
+{
+	system("cls");
+	system("color 00");
+//=============================================
+	cout<<"\n\t\t============================================";
+	cout<<"\n\t\t============================================";
+	cout<<"\n\t\t\t1.CUSTOMER RECORDS";
+	cout<<"\n\t\t\t2.OCCUPIED ROOMS";
+	cout<<"\n\t\t\t3.UPDATE RECORD";
+	cout<<"\n\t\t\t4.Exit";
+	cout<<"\n\t\t=======================================";
+	cout<<"\n\t\t============================================";
+	cin>>choice;
+	cout<<"CHOOSE AN OPTION: ";
+	choice++;
+//================================================
+switch(choice)
+{
+
+	case 1:
+	{
+		RoomBooking();
+		break;
+	}
+		case 2: 
+		{
+			display();
+			main_menu();
+			break;
+		}
+			case 3: 
+			{
+				rooms();
+				main_menu();
+				break;
+			}
+				case 4:	
+					{
+						Update();
+						main_menu();
+						break;
+					}
+					case 5:
+					{
+						return;
+					} 
+					default:
+					{
+						cout<<"\n\n\t\t\tINVALID OPTION!!";
+						cout<<"\n\t\t\tPress any key to continue.";	
+						getch();
+
+					}						
+
+}
+
+}
+
+}		
+void CustomerMenu()
+{
+	
+	system("color 70");
+	int ch;
+	while(ch!=4)
+	{
+	system("cls");
+	cout<<"\n\t\t============================================";
+	cout<<"\n\t\t============================================";
+	cout<<"\n\t\t\t1.ROOM BOOKING";
+	cout<<"\n\t\t\t2.MODIFY YOUR INFORMATION";
+	cout<<"\n\t\t\t3.BILL";
+	cout<<"\n\t\t\t4.OCCUPIED ROOMS";
+	cout<<"\n\t\t\t5.EXIT";
+	cout<<"\n\t\t=======================================";
+	cout<<"\n\t\t============================================";
+	cout<<"\n\t\tSELECT AN OPTION: ";
+	cin>>ch;
+	switch(ch)
+	{
+	case 1:
+	{
+		system("cls");
+		RoomBooking();
+		CustomerMenu();
+		break;
+	}
+		case 2: 
+		{
+			system("cls");
+			cout<<"Enter Your Room Number: ";
+			int r;
+			cin>>r; 
+			modify(r);
+			CustomerMenu();
+			break;
+		}
+			case 3: 
+			{
+				system("cls");
+				cout<<"\n\t\t\tENTER ROOM NUMBER: ";
+				int x;
+				cin>>x;
+				if(x>=1&&x<=50)
+				{
+					bill(x);
+				}
+				else
+				{
+					cout<<"\n\nInvalid Room Number!";
+					CustomerMenu();
+				}
+				break;
+			}
+				case 4:	
+					{
+						system("cls");
+						rooms();
+						CustomerMenu();
+						break;	
+					}	
+					case 5:
+						{
+							return;
+						}
+					default:
+					{
+						cout<<"\n\n\t\t\tINVALID OPTION!!";
+						cout<<"\n\t\t\tPress any key to continue.";	
+						getch();
+						break;
+					}	
+						
+	}
+	
+	}
+	
+}
+
+void RoomBooking()
+{
+	int i=0;
+	system("cls");
+	int r,flag;
+	ofstream fout("Record.dat",ios::app);
+	system("color 00");
+//===================================================
+		cout<<"\t\t============================================";
+		cout<<"\n\t\t============================================";
+		cout<<"\n\t\t   | Enter Customer Detalis";
+		cout<<"\n\t\t   | Room no: ";
+		cout<<"\n\t\t   | Total no. of Rooms -    |50";
+		cout<<"\n\t\t   | Ordinary Rooms from     |01 - 30";
+		cout<<"\n\t\t   | Luxuary Rooms from      |31 - 45";
+		cout<<"\n\t\t   | Royal Rooms from        |46 - 50";
+		cout<<"\n\t\t============================================";
+		cout<<"\n\t\t============================================";
+		cout <<"\n\n\n  Enter The Room no. you want to stay in :- "<<endl;
+		cin>>r;
+//====================================================		
+
+		flag=check(r);
+		
+		if(flag==1)
+		{
+			cout<<"\n Room Is Not Available!";
+			cout<<"Press any key to continue.";
+			getch();
+			RoomBooking();
+		}
+
+		else if(r<=50&&r>=1)
+		{
+//			if (!((r>='a'&&r<='z')||(r>='A'&&r<='Z')))
+//			{
+			
+				room_no=r;
+				cout<<" Name: ";
+				fflush(stdin);
+				cin.getline(name,20);
+				cout<<" Address: ";
+				fflush(stdin);
+				cin.getline(address,20);
+				cout<<" Phone No: ";
+	        	//	cin>>phone;
+	        	char ch;
+				for(int j=0;j<11;j++)
+				{
+				ch=getch();
+				if(ch>='0' && ch<='9' )
+				{
+					cout<<ch;
+					phone[i]=ch;
+					i++;
+				}
+				else if(ch=='\b')
+				{
+					i--;
+					phone[i]=0;
+					cout<<"\b \b";
+					j-=2;
+					continue;
+				}
+				else
+				{
+					continue;
+				}
+				}
+				fout.write((char*)this,sizeof(hotel));
+				cout<<"\n Room booked SUCCESFULLY...!!!";
+				cout<<"\nPress any key to continue.";
+				getch();
+				system("cls");
+				return;
+			//}
+				
+			}
+		else 
+		{
+			cout<<"\n Room Is Not Available!";
+			cout<<"Press any key to continue.";
+			getch();
+			RoomBooking();
+		}
+		
+		cout<<"\n Press any key to continue.....!!";
+		
+		getch();
+		fout.close();
+}
+void display()
+{
+
+  system("cls");
+
+ifstream fin("Record.dat",ios::in);
+int r,flag=0;
+
+cout<<"\n Enter room no. :- "<<endl;
+cin>>r;
+fflush(stdin);
+//cout<<"\n Enter Name: ";
+//char arr[20];
+//cin.getline(arr,20);
+
+while(!fin.eof())
+{
+
+fin.read((char*)this,sizeof(hotel));
+system("cls");
+cout<<"\n\t\t\t ----------Customer Details------------";
+cout<<"\n\t\t----------------";
+cout<<"\n\n Room no: "<<room_no;
+cout<<"\n\t\t----------------";
+cout<<"\n Name: "<<name;
+cout<<"\n\t\t----------------";
+cout<<"\n Address: "<<address;
+cout<<"\n\t\t----------------";
+cout<<"\n Phone no: "<<phone;
+cout<<"\n\t\t----------------";
+flag=1;
+break;
+
+}
+
+
+
+if(flag==0)
+cout<<"\n Sorry Room no. not found / vacant....!!";
+cout<<"\n\n Press any key to continue....!!";
+
+getch();
+fin.close();
+}
+		
+void rooms()
+{
+
+  system("cls");
+
+ifstream fin("Record.dat",ios::in);
+cout<<"\n\t\t\t    List Of Rooms Allotted";
+cout<<"\n\t\t\t    ----------------------";
+cout<<"\n\n Room No.\tName\n";
+
+while(!fin.eof())
+{
+
+fin.read((char*)this,sizeof(hotel));
+cout<<"\n\n "<<room_no<<"\t\t"<<name;
+
+}
+
+cout<<"\n\n\n\t\t\tPress any key to continue.....!!";
+getch();
+fin.close();
+
+}
+
+void Update()
+{
+
+  system("cls");
+
+int choice,r;
+cout<<"\n EDIT MENU";
+cout<<"\n ---------";
+cout<<"\n\n 1.Modify Customer Record";
+cout<<"\n 2.Delete Customer Record";
+cout<<"\n 3. Bill Of Customer";
+cout<<"\n Enter your choice: ";
+
+cin>>choice;
+  system("cls");
+
+cout<<"\n Enter room no: " ;
+cin>>r;
+
+switch(choice)
+{
+
+case 1:	modify(r);
+break;
+
+case 2:	delete_rec(r);
+break;
+
+case 3: bill(r);
+break;
+
+default: cout<<"\n Invalid Choice.....!!";
+
+}
+cout<<"\n Press any key to continue....!!!";
+
+getch();
+}
+
+
+	
+	
+void modify(int r)
+{
+
+long pos,flag=0;
+
+cout<<"\n Enter Name: ";
+fflush(stdin);
+char arr[20];
+cin.getline(arr,20);
+
+fstream file("Record.dat",ios::in|ios::out|ios::binary);
+
+while(!file.eof())
+{
+
+pos=file.tellg();
+file.read((char*)this,sizeof(hotel));
+
+if(room_no==r&&(strcmp(name,arr)==0))
+{
+
+cout<<"\n Enter New Details";
+cout<<"\n -----------------";
+cout<<"\n Name: ";
+fflush(stdin);
+cin>>name;
+cout<<" Address: ";
+fflush(stdin);
+cin>>address;
+cout<<" Phone no: ";
+//cin>>phone;
+fflush(stdin);
+int i=0;
+char ch;
+for(int j=0;j<11;j++)
+{
+ch=getch();
+if(ch>='0' && ch<='9' )
+{
+	cout<<ch;
+	phone[i]=ch;
+	i++;
+}
+else if(ch=='\b')
+{
+	i--;
+	phone[i]=0;
+	cout<<"\b \b";
+	j-=2;
+	continue;
+}
+else
+{
+	continue;
+}
+}
+file.seekg(pos);
+file.write((char*)this,sizeof(hotel));
+cout<<"\n Record is modified....!!";
+cout<<"\n\n\t press any key to continue.";
+getch();
+flag=1;
+break;
+
+}
+
+}
+
+if(flag==0)
+cout<<"\n Sorry Room no. not found or vacant...!!";
+cout<<"\n\n\t press any key to continue.";
+getch();
+file.close();
+
+}
+
+	
+
+int check(int r)
+{
+
+int flag=0;
+
+ifstream fin("Record.dat",ios::in);
+
+while(!fin.eof())
+{
+
+fin.read((char*)this,sizeof(hotel));
+if(room_no==r)
+{
+
+flag=1;
+break;
+
+}
+
+}
+
+fin.close();
+return(flag);
+
+}				
+
+void delete_rec(int r)
+{
+
+int flag=0;
+char ch;
+ifstream fin("Record.dat",ios::in);
+ofstream fout("temp.dat",ios::out);
+
+while(!fin.eof())
+{
+
+fin.read((char*)this,sizeof(hotel));
+if(room_no==r)
+
+{
+
+cout<<"\n Name: "<<name;
+cout<<"\n Address: "<<address;
+cout<<"\n Phone No: "<<phone;
+cout<<"\n\n Do you want to delete this record(y/n): ";
+cin>>ch;
+
+if(ch=='n')
+{
+	flag=1;
+	break;
+}
+else
+{
+	fout.write((char*)this,sizeof(hotel));
+	remove("Record.dat");
+	rename("temp.dat","Record.dat");
+}
+}
+else
+{
+flag=0;
+break;
+}
+
+}
+fin.close();
+fout.close();
+	if(flag==0){
+	
+	cout<<"\n Sorry room no. not found or vacant...!!";
+}
+}
+void bill(int r)
+{
+
+	hotel h1;
+	ifstream f1;
+	cout<<"\n\n\tEnter Number of Days Stayed: ";
+	int stay;
+	cin>>stay;
+	int flag=0;
+	f1.open("record.dat",ios::in|ios::binary);
+
+
+//  		f1.read((char*)&h1,sizeof (hotel));
+  		while(!f1.eof())
+  		{
+ 				 f1.read((char*)&h1,sizeof(hotel));
+  			
+
+	  	if (h1.room_no == r)
+		{
+	
+		  	if(h1.room_no>=1&&h1.room_no<=30)
+			{  
+		  	cout<<"=============BILL===========\n\tTOTAL Amount:"<<stay*5000<<endl;
+		  	flag=1;
+		  	break;
+			}
+		  	else if (h1.room_no>=35&&h1.room_no<=45)
+		  	{
+			flag=1;
+			cout<<"=============BILL===========\n\tTOTAL Amount:"<<stay*7000<<endl;
+			break;
+ 		}
+			 else{
+			flag=1;	 
+		  	cout<<"=============BILL===========\n\tTOTAL Amount:"<<stay*9000<<endl;
+			break;
+		}
+
+		}
+	
+	
+		}
+		if(flag==0)
+		{
+			cout<<"\n\nRoom not Occupied";
+			
+		}
+		
+	
+	
+	f1.close();
+	getch();
+	
+}       
+
+};
+
+
+
+
+
+
+
+
+
+//=============================================================================================
+struct r{
+    char dish[50];
+    int key;
+    float price;
+	}r;
+class Restaurant
+{
+	
+public:
+    void Createmenu()
+    {
+	    char a;
+	    int k;
+	    fstream obj;
+	    top:
+	    do {
+	        obj.open("Restaurant.txt",ios::in|ios::binary);
+	        cout<<"ENTER THE SERIAL NUMBER :";
+	        cin>>k;
+	         while(obj.read((char*)&r,sizeof(r)))
+	            {
+	                if(r.key==k)
+	                {
+	                    cout<<"key is already exist"<<endl;
+	                    obj.close();
+	                goto top;
+	                }
+	            }
+        obj.close();
+        obj.open("Restaurant.txt",ios::app|ios::binary);
+        r.key=k;
+        cin.ignore();
+        cout<<"ENTER THE DISH NAME:";
+        gets(r.dish);
+        cout<<"ENTER THE DISH PRICE:";
+        cin>>r.price;
+        obj.write((char*)&r,sizeof(r));
+        cout<<"Do you want to add an other [y/n]:";
+        cin>>a;
+        obj.close();
+    }
+    while(a!='n');
+
+	}
+    void Search()
+    {
+	    int a,c=0;
+	    fstream obj;
+	    obj.open("Restaurant.txt",ios::in);
+	    cout<<"ENTER THE DISH KEY HERE :";
+	    cin>>a;
+	    cout<<"\t"<<"Serial No."<<"\t\t"<<"DISH"<<"\t\t\t"<<"PRICE"<<endl;
+	    cout<<"\t====================================================\n";
+	    while(obj.read((char*)&r,sizeof(r)))
+	    {
+	           if(r.key==a)
+	           {
+	            cout<<"\t"<<r.key<<"\t\t\t"<<r.dish<<"\t\t\t"<<r.price<<endl;
+	            c++;
+	           }
+	    }
+	    cout<<"\n\n\t\tPress any key to continue."<<endl;
+    	getch();
+	    if(c==0)
+		    {
+		        cout<<"NOT FOUND"<<endl;
+		    }
+	    obj.close();
+	}
+    void Display()
+	{
+	system("cls");
+	int c=0;
+    fstream obj;
+    obj.open("Restaurant.txt",ios::in|ios::binary);
+    cout<<"\n\n\n";
+    cout<<"\tKey\t\tDISH NAME\t\tPRICE"<<endl;
+    cout<<"\t=======================================================\n";
+    while(obj.read((char*)&r,sizeof(r)))
+    {
+            cout<<"\t"<<r.key<<"\t\t"<<r.dish<<"\t\t\t"<<r.price<<endl;
+            c++;
+           
+	}
+	cout<<"\n\n\t\tPress any key to continue."<<endl;
+    getch();
+    if(c==0)
+    {
+        cout<<"list is empty"<<endl;
+    }
+    obj.close();
+	}
+    void Update()
+    {
+    	 int a,p,c=0;
+     fstream obj;
+     obj.open("Restaurant.txt",ios::in|ios::out|ios::binary);
+    cout<<"ENTER THE DISH KEY HERE :";
+    cin>>a;
+    obj.seekg(0);
+    while(obj.read((char*)&r,sizeof(r)))
+    {
+        if(r.key==a)
+        {
+            cout<<"DESTINATION RECORD :"<<endl;
+            cout<<"\t"<<r.key<<"\t\t"<<r.dish<<"\t\t\t"<<r.price<<endl;
+            p=obj.tellg()-(sizeof(r));
+            obj.seekp(p);
+            cout<<"ENTER THE DISH KEY HERE :";
+            cin>>r.key;
+            cin.ignore();
+            cout<<"ENTER THE DISH NAME :";
+             gets(r.dish);
+            cout<<"ENTER THE DISH PRICE :";
+            cin>>r.price;
+            obj.write((char*)&r,sizeof(r));
+            c++;
+           }
+
+        }
+        if(c==0)
+        {
+            cout<<""<<endl;
+        }
+
+    obj.close();
+	}
+    void Deleting(){
+	
+		int a,c;
+	    fstream obj,obj1;
+	    obj.open("Restaurant.txt",ios::in|ios::binary);
+	    obj1.open("Temp.txt",ios::app|ios::binary);
+	    cout<<"ENTER THE DISH KEY HERE :";
+	    cin>>a;
+	    while(obj.read((char*)&r,sizeof(r)))
+	    {
+	        if(r.key==a)
+	        {
+	            c++;
+	            cout<<"\n\n\n";
+	            cout<<"\t"<<r.key<<"\t\t"<<r.dish<<"\t\t\t"<<r.price<<endl;
+	            cout<<"Destination record is deleted"<<endl;
+	        }
+	        if(r.key!=a)
+	        	{
+	            	obj1.write((char*)&r,sizeof(r));
+	        	}
+	    }
+	    obj.close();
+	    obj1.close();
+	    if(c==0)
+	       {
+	         cout<<"not found"<<endl;
+	       }
+	    remove("Restaurant.txt");
+	    rename("Temp.txt","Restaurant.txt");
+	    }
+		void Admin()
+		{
+			char a;
+	    do{
+	
+	            cout<<"\n\t\t\t\t\t\t|||||||||||||||||||||||||"<<endl;
+	            cout<<"\t\t\t\t\t\t|                       |"<<endl;
+	            cout<<"\t\t\t\t\t\t|  1) ADD DISH          |"<<endl;
+	            cout<<"\t\t\t\t\t\t|  2) DISPLAY           |"<<endl;
+	            cout<<"\t\t\t\t\t\t|  3) QUERY             |"<<endl;
+	            cout<<"\t\t\t\t\t\t|  4) UPDATE            |"<<endl;
+	            cout<<"\t\t\t\t\t\t|  5) DELETE            |"<<endl;
+	            cout<<"\t\t\t\t\t\t|  0) EXIT TO MAIN MANU |"<<endl;
+	            cout<<"\t\t\t\t\t\t|                       |"<<endl;
+	            cout<<"\t\t\t\t\t\t|||||||||||||||||||||||||"<<endl;
+	            cout<<"\t\t\t\t\t\tSELECT THE KEY : ";
+	            cin>>a;
+	            switch(a)
+	            {
+	            case '0':
+	                break;
+	            case '1':
+	                system("CLS");
+	               	Createmenu();
+	                break;
+	            case '2':
+	                system("CLS");
+	               	Display();
+	                break;
+	            case '3':
+	                system("CLS");
+	               	Search();
+	                break;
+	            case '4':
+	                system("CLS");
+	               	Update();
+	                break;
+	            case '5':
+	                system("CLS");
+	             	Deleting();
+	                break;
+	            }
+	    }
+	    while(a!='0');	
+		}
+};
+
+
+
+
+
+
+class Customer:public Restaurant
+{
+	struct {
+		char d[50];
+		float p,amount;
+		int qty;
+	}rd;
+	
+public:
+    void Bill()
+    {
+    	
+	     int a,c=0;
+	     char ch;
+	     float total=0;
+	    fstream obj,obj1;
+	    DishMenu();
+	    obj1.open("Bill.txt",ios::out|ios::binary);
+	     do{
+	    obj.open("Restaurant.txt",ios::in|ios::binary);
+	    cout<<"\n\n\n";
+	    cout<<"ENTER THE DISH KEY HERE : ";
+	    cin>>a;
+	    while(obj.read((char*)&r,sizeof(r)))
+	    {
+	           if(r.key==a)
+	           {
+	            c++;
+	            cout<<"\n\nENTER THE QUANTITY HERE : ";
+	            cin>>rd.qty;
+	            rd.amount=rd.qty*r.price;
+	            cout<<"\t"<<"DISH"<<"\t\t"<<"Price*Quantity"<<"\t\t"<<"Total"<<endl;
+	            cout<<"\t======================================================="<<endl;
+	            cout<<"\t"<<r.dish<<"\t\t"<<r.price<<"*"<<rd.qty<<"\t\t\t"<<rd.amount<<endl;
+	            strcpy(rd.d,r.dish);
+	            rd.p=r.price;
+	            obj1.write((char*)&rd,sizeof(rd));
+	            total=total+rd.amount;
+	           }
+	        }
+	        if(c==0)
+	     {
+	        cout<<"not found"<<endl;
+	     }
+	
+	    cout<<"Do you want to order more [y/n]";
+	    cin>>ch;
+	    obj.close();
+	     }
+	     while(ch!='n');
+	    obj1.close();
+	    cout<<"\n\n\n";
+	    cout<<"|||||||||||||||||||||||||||||||||||||||||||||||| BILL  |||||||||||||||||||||||||||||||||||||||||||||||||||||||"<<endl;
+	    cout<<"\n\n";
+		Showbill();
+	    cout<<"\n\n|||\t\t\t\t\t\t\t   TOTAL="<<total<<"\t\t\t\t\t   |||"<<endl;
+	    
+	}
+    	
+	
+    void Showbill()
+    {
+    	fstream obj;
+    
+	    obj.open("Bill.txt",ios::in|ios::binary);
+	    cout<<"\tDISH NAME\t\tPRICE\t\tQTY\t\tAMOUNT"<<endl;
+	    while(obj.read((char*)&rd,sizeof(rd)))
+	    {
+	
+	            cout<<"\t"<<rd.d<<"\t\t\t"<<rd.p<<"\t\t"<<rd.qty<<"\t\t"<<rd.amount<<endl;
+	
+	
+	    }
+	    cout<<"\n\n\nPress any key to continue.";
+	    getch();
+	    obj.close();
+	}
+    void DishMenu()
+    {
+    
+    	fstream obj;
+   		obj.open("Restaurant.txt",ios::in|ios::binary);
+   		
+   		cout<<"\t\tMENU:\n";
+	    while(obj.read((char*)&r,sizeof(r)))
+	    {
+	    		cout<<"\n";
+	            cout<<"\t\t"<<r.key<<") "<<r.dish<<"-------RS  "<<r.price<<endl;
+	    }
+	  	  obj.close();
+	}
+	
+	void Customer_Menu()
+	{
+		Sleep(700);
+			 	
+			 	char ch;
+			 	
+			 	while(ch!=4)
+			 	{
+			 		system("cls");
+			 		cout<<"\n\t\t============================================";
+					cout<<"\n\t\t============================================";
+					cout<<"\n\t\t\t1.DISPLAY MENU";
+					cout<<"\n\t\t\t2.QUERY";
+					cout<<"\n\t\t\t3.BUY ";
+					cout<<"\n\t\t\t4.BILL";
+					cout<<"\n\t\t\t5.EXIT";
+					cout<<"\n\t\t=======================================";
+					cout<<"\n\t\t============================================\n";
+					cout<<"SELECT AN OPTION: ";
+					cin>>ch;
+				switch(ch)
+	            {
+	            case '1':
+	               
+	               	Display();
+	                break;
+	            case '2':
+	                system("cls");
+	               	Search();
+	                break;
+	            case '3':
+	                system("cls");
+	               	Bill();
+	                break;
+	            case '4':
+	                Showbill();
+	                break;
+	            case '5':
+	            	return;
+	            default:
+	            	cout<<"INVALID CHOICE!";
+					Customer_Menu();
+				}
+				
+	}
+	
+}
+		
+};
+
+#define RED     "\x1b[31m"
+#define GREEN   "\x1b[32m"
+#define YELLOW  "\x1b[33m"
+#define BLUE    "\x1b[34m"
+#define MAGENTA "\x1b[35m"
+#define CYAN    "\x1b[36m"
+#define WHITE   "\x1b[0m"
+void signin()
+{
+	static	int k=0;
+	char user[]="ADMIN";
+	char pass[]="admin";
+	int i=0,count=60,j=0;
+	char a,pas[20],username[20];
+	cout<<"USERNAME: ";
+	cin>>username;
+	cout<<"\nPASSWORD: ";
+	memset(pas,0,20);
+	for(i=0,j=0;a!=13;i++)
+	{   
+		a=getch();
+		
+		 if(a!=8 && a!=13)
+			 {
+				pas[j]=a;
+				cout<<"*";
+				count++;
+				j++;
+			}
+		 else if(a==8&&count!=60)
+		{	
+			pas[j-1]=0; //memory
+			count--;  
+			cout<<" ";//on screen
+			j--;
+	
+        }
+    }
+    if((strcmp(user,username)==0) && (strcmp(pass,pas)==0))
+		{
+				
+		    cout<<"\n\nPASSWORD MATCHED";
+	        Sleep(500);
+			return;
+		}
+	else
+	{
+		if(k<2)
+			{
+				cout<<"\n\nPassword or Username Incorrect";
+				Sleep(500);
+				k++;
+				system("cls");
+				signin();
+			}
+		else
+			{
+				Sleep(500);
+				system("cls");
+				cout<<"\n\nThird Attempt Failed!!";
+				exit(0);
+			}	
+	
+	
+}
+}
+
+
+int main()
+{
+HWND hWnd = GetConsoleWindow();
+ShowWindow(hWnd, SW_SHOWMAXIMIZED);
+system("color 70");
+
+
+	system("color 00");
+	cout<<"\a\a\a\a";
+	cout<<"\n\n\n\n\n\n\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t";
+	cout<<CYAN"\n\t\t\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2"BLUE;
+	cout<<CYAN"\n\t\t\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2"BLUE;
+	cout<<CYAN"\n\t\t\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2";
+	cout<<CYAN"\n\t\t\xB2\xB2                                                          \t\xB2\xB2";
+	cout<<RED"\n\t\t\xB2\xB2                                                          \t\xB2\xB2";
+	cout<<RED"\n\t\t\xB2\xB2                                                          \t\xB2\xB2";
+	cout<<BLUE"\n\t\t\xB2\xB2                                                          \t\xB2\xB2";
+	cout<<BLUE"\n\t\t\xB2\xB2                                                          \t\xB2\xB2";
+	cout<<RED"\n\t\t\xB2\xB2                                                          \t\xB2\xB2";
+	cout<<RED"\n\t\t\xB2\xB2              \xB2''   W E L C O M E     ''\xB2               \t\xB2\xB2";
+	cout<<CYAN"\n\t\t\xB2\xB2                                                          \t\xB2\xB2";
+	cout<<CYAN"\n\t\t\xB2\xB2              \xB2''       T  O          ''\xB2                \t\xB2\xB2";
+	cout<<YELLOW"\n\t\t\xB2\xB2                                                          \t\xB2\xB2";
+	cout<<YELLOW"\n\t\t\xB2\xB2              \xB2''     H O T E L     \t''\xB2          \t\t\xB2\xB2";
+	cout<<RED"\n\t\t\xB2\xB2                                                          \t\xB2\xB2";
+	cout<<RED"\n\t\t\xB2\xB2              \xB2''      A  B  C  \t''\xB2                   \t\xB2\xB2";
+	cout<<GREEN"\n\t\t\xB2\xB2                                                          \t\xB2\xB2";
+	cout<<GREEN"\n\t\t\xB2\xB2                                                          \t\xB2\xB2";
+	cout<<RED"\n\t\t\xB2\xB2                                                          \t\xB2\xB2";
+	cout<<RED"\n\t\t\xB2\xB2                                                          \t\xB2\xB2";
+	cout<<CYAN"\n\t\t\xB2\xB2                                                          \t\xB2\xB2";
+	cout<<BLUE"\n\t\t\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2";
+	cout<<CYAN"\n\t\t\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2";
+	cout<<CYAN"\n\t\t\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2";
+	cout<<CYAN"\n\t\t\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2"BLUE;
+}
+	
