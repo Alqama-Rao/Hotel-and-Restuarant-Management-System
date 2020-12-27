@@ -1137,8 +1137,7 @@ system("color 70");
 				cout<<"Invalid Option!";
 				goto top;
 			}
-            break;
-            
+            break;   
         }
     }
     while(a!='0');
