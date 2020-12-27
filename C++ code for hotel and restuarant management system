@@ -1037,5 +1037,112 @@ system("color 70");
 	cout<<CYAN"\n\t\t\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2";
 	cout<<CYAN"\n\t\t\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2";
 	cout<<CYAN"\n\t\t\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2"BLUE;
+
+	Sleep(5000);
+		getch();
+	system("cls");
+
+ char a;
+    Customer obj;
+    hotel h;
+    do
+    {
+    	back:
+    	Sleep(600);
+    	system("cls");
+		system("color 70");
+        cout<<"\n\t\t\t\t\t\t||||||||||||||||||||||||"<<endl;
+        cout<<"\t\t\t\t\t\t|                      |"<<endl;
+        cout<<"\t\t\t\t\t\t|    1) ADMINISTRATOR  |"<<endl;
+        cout<<"\t\t\t\t\t\t|    2) CUSTOMER       |"<<endl;
+        cout<<"\t\t\t\t\t\t|    0) EXIT           |"<<endl;
+        cout<<"\t\t\t\t\t\t|                      |"<<endl;
+        cout<<"\t\t\t\t\t\t||||||||||||||||||||||||"<<endl;
+        cout<<"\t\t\t\t\t\t SELECT THE OPTION : ";
+        cin>>a;
+        switch(a)
+        {
+        case '0':
+            break;
+        case '1':
+             {
+             	signin();
+            top:
+			 system("CLS");
+             system("color 70");
+              cout<<"\t\t\tADMINISTRATOR PORTAL\n\n";
+           //=====================================================
+			cout<<"\n\t\t\t\t\t\t||||||||||||||||||||||||"<<endl;
+        	cout<<"\t\t\t\t\t\t|                        |"<<endl;
+        	cout<<"\t\t\t\t\t\t|    1) RESTAURANT       |"<<endl;
+        	cout<<"\t\t\t\t\t\t|    2) HOTEL            |"<<endl;
+        	cout<<"\t\t\t\t\t\t|    0) EXIT             |"<<endl;
+        	cout<<"\t\t\t\t\t\t|                        |"<<endl;
+        	cout<<"\t\t\t\t\t\t||||||||||||||||||||||||"<<endl;
+        	cout<<"\t\t\t\t\t\t SELECT THE OPTION : ";
+             //==================================================
+			 int x;
+			 cin>>x;
+			 if(x==1)
+			 {
+         	   obj.Admin();
+        	 }
+        	else if(x==2)
+        	{
+        		h.main_menu();
+			}
+			else if(x==0)
+			{
+				goto back;
+			}
+			else
+			{
+				cout<<"Invalid Option!";
+				goto top;
+			}
+            break;
+        }
+        case '2':
+             system("CLS");
+             system("color 70");
+             cout<<"\t\t\tCUSTOMER PORTAL\n\n";
+             //================================================
+        	cout<<"\n\t\t\t\t\t\t||||||||||||||||||||||||"<<endl;
+        	cout<<"\t\t\t\t\t\t|                        |"<<endl;
+        	cout<<"\t\t\t\t\t\t|    1) RESTAURANT       |"<<endl;
+        	cout<<"\t\t\t\t\t\t|    2) HOTEL            |"<<endl;
+        	cout<<"\t\t\t\t\t\t|    0) EXIT             |"<<endl;
+        	cout<<"\t\t\t\t\t\t|                        |"<<endl;
+        	cout<<"\t\t\t\t\t\t||||||||||||||||||||||||"<<endl;
+        	cout<<"\t\t\t\t\t\t SELECT THE OPTION : ";
+             //=================================================
+             int x;
+			 cin>>x;
+			 if(x==1)
+			 {
+			 	Sleep(700);
+			 	system("cls");
+			 	obj.Customer_Menu();
+        	 }
+        	else if(x==2)
+        	{
+        		Sleep(700);
+        		system("cls");
+        		h.CustomerMenu();
+			}
+			else
+			{
+				Sleep(500);
+				system("cls");
+				cout<<"Invalid Option!";
+				goto top;
+			}
+            break;
+            
+        }
+    }
+    while(a!='0');
+
+
+return 0;
 }
-	
